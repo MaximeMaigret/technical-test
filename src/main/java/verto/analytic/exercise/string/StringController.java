@@ -3,6 +3,8 @@ package verto.analytic.exercise.string;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/verto-analytic")
 public class StringController {
@@ -10,8 +12,8 @@ public class StringController {
     @Autowired
     private StringService service;
 
-    @PostMapping("/upload/{newString}")
-    public String uploadString(@PathVariable String newString){
-        return service.upload(newString);
+    @PostMapping("/upload")
+    public void uploadString(@RequestBody Set<String> newStrings){
+        // TODO
     }
 }
