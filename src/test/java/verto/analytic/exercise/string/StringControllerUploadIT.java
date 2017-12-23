@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class StringControllerTest {
+public class StringControllerUploadIT {
 
     @Autowired
     private MockMvc mvc;
@@ -30,7 +30,7 @@ public class StringControllerTest {
         Integration tests
      */
     @Test
-    public void should_upload_enpoint_return_OK_if_different_strings() throws Exception{
+    public void should_return_OK_if_different_strings() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         List<String> mySet= Arrays.asList("aaa", "bbb", "ccc");
         String content = mapper.writeValueAsString(mySet);
@@ -40,7 +40,7 @@ public class StringControllerTest {
     }
 
     @Test
-    public void should_upload_enpoint_return_error_if_duplicate_strings() throws Exception{
+    public void should_return_error_if_duplicate_strings() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         List<String> mySet= Arrays.asList("aaa", "bbb", "aaa");
         String content = mapper.writeValueAsString(mySet);
