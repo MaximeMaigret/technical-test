@@ -11,11 +11,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,15 +27,25 @@ public class StringControllerTest {
     private MockMvc mvc;
 
     /*
-        Integration test to prove that the endpoint is working fine
+        Integration tests
      */
     @Test
-    public void should_upload_enpoint_return_OK() throws Exception{
+    public void should_upload_enpoint_return_OK_if_different_strings() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
-        Set<String> mySet= new HashSet<>(Arrays.asList("aaa", "bbb", "ccc"));
+        List<String> mySet= Arrays.asList("aaa", "bbb", "ccc");
         String content = mapper.writeValueAsString(mySet);
-        mvc.perform(MockMvcRequestBuilders.post("/verto-analytic/upload").content(content).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(post("/verto-analytic/upload").content(content).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void should_upload_enpoint_return_error_if_duplicate_strings() throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> mySet= Arrays.asList("aaa", "bbb", "aaa");
+        String content = mapper.writeValueAsString(mySet);
+        mvc.perform(post("/verto-analytic/upload").content(content).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 }

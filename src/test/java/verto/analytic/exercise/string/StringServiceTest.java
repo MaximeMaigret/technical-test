@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.xml.ws.WebFault;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-//@RunWith(SerenityRunner.class)
 public class StringServiceTest {
 
     @InjectMocks
@@ -31,9 +33,10 @@ public class StringServiceTest {
 
     @Test
     public void should_take_any_number_of_string_on_upload() {
-        Set<String> entry = new HashSet<>(Arrays.asList("aaa", "bbb", "ccc"));
+        List<String> entry = (Arrays.asList("aaa", "bbb", "ccc"));
+
         service.upload(entry);
-        Set<String> stored = repository.getStoredSetString();
-        assertEquals("All strings must have been stored", entry, stored);
+
+        verify(repository).addSet(new HashSet<>(entry));
     }
 }
