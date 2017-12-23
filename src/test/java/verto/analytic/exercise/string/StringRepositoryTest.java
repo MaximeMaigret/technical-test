@@ -23,7 +23,7 @@ public class StringRepositoryTest {
     }
 
     @Test
-    public void should_addSet_add_string_to_the_stored(){
+    public void should_addSet_add_string_into_the_stored(){
         Set<String> entry = new HashSet<>(Arrays.asList("aaa", "bbb", "ccc"));
         repository.addSet(entry);
 
@@ -33,7 +33,7 @@ public class StringRepositoryTest {
     }
 
     @Test
-    public void should_addSet_add_string_to_the_stored_if_not_empty(){
+    public void should_addSet_add_string_into_the_stored_set_if_not_empty(){
         Set<String> initialEntry = new HashSet<>(Arrays.asList("aaa", "bbb", "ccc"));
         repository.addSet(initialEntry);
         Set<String> secondEntry = new HashSet<>(Arrays.asList("111", "222", "333"));
@@ -44,5 +44,4 @@ public class StringRepositoryTest {
         assertTrue("The stored strings must be the same as the entry one",stored.contains(initialEntry));
         assertTrue("The stored strings must be the same as the entry one",stored.contains(secondEntry));
     }
-
 }

@@ -8,10 +8,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.xml.ws.WebFault;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -38,5 +35,19 @@ public class StringServiceTest {
         service.upload(entry);
 
         verify(repository).addSet(new HashSet<>(entry));
+    }
+
+    @Test
+    public void should_look_into_all_stored_strings(){
+        String searchedString = "bbb";
+        Set<String> setContainingSearchedString = new HashSet<>(Arrays.asList("aaa", searchedString, "ccc"));
+        Set<String> setNotContainingSearchedString = new HashSet<>(Arrays.asList("111", "222", "333"));
+        List<Set<String>> allStoredSet = Arrays.asList(setContainingSearchedString,setNotContainingSearchedString);
+
+        when(repository.getAllStoredSetString()).thenReturn(allStoredSet);
+
+        List<Set<String>> result = service.search(searchedString);
+
+        assertEquals("Must return only set containing the searched string.", Collections.singletonList(setContainingSearchedString), result);
     }
 }

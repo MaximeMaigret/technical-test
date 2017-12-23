@@ -19,4 +19,9 @@ public class StringController {
         service.upload(newStrings);
     }
 
+    @PostMapping("/search")
+    public List<Set<String>> searchString(@RequestBody String searchString){
+        return service.search(searchString);
+    }
+
 }

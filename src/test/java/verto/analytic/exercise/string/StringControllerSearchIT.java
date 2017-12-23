@@ -1,19 +1,27 @@
 package verto.analytic.exercise.string;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
+import static org.springframework.test.annotation.DirtiesContext.MethodMode.BEFORE_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -27,10 +35,16 @@ public class StringControllerSearchIT {
     @Autowired
     private MockMvc mvc;
 
+    @After
+    public void clean(){
+
+    }
+
     /*
         Integration tests
      */
     @Test
+    @DirtiesContext(methodMode = BEFORE_METHOD)
     public void should_return_the_set_containing_the_string() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
 
@@ -41,16 +55,17 @@ public class StringControllerSearchIT {
                 .andExpect(status().isOk());
 
         String search = "bbb";
-        String contentSearch = mapper.writeValueAsString(search);
 
-        mvc.perform(post("/verto-analytic/search").content(contentSearch).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(post("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0]").value(setString));
+                .andExpect(jsonPath("$[0]", hasSize(3)))
+                .andExpect(jsonPath("$[0]", containsInAnyOrder("aaa","bbb", "ccc")));
     }
     
     @Test
+    @DirtiesContext(methodMode = BEFORE_METHOD)
     public void should_return_all_the_set_containing_the_string() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
 
@@ -67,24 +82,24 @@ public class StringControllerSearchIT {
                 .andExpect(status().isOk());
 
         String search = "bbb";
-        String contentSearch = mapper.writeValueAsString(search);
 
-        mvc.perform(post("/verto-analytic/search").content(contentSearch).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(post("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0]").value(firstSet))
-                .andExpect(jsonPath("$[1]").value(secondSet));
+                .andExpect(jsonPath("$[0]", hasSize(3)))
+                .andExpect(jsonPath("$[0]" , containsInAnyOrder("aaa", "bbb", "ccc")))
+                .andExpect(jsonPath("$[1]", hasSize(3)))
+                .andExpect(jsonPath("$[1]" , containsInAnyOrder("111", "bbb", "222")));
     }
 
     @Test
+    @DirtiesContext(methodMode = BEFORE_METHOD)
     public void should_return_empty_if_string_not_in_any_set() throws Exception{
-        ObjectMapper mapper = new ObjectMapper();
 
         String search = "bbb";
-        String contentSearch = mapper.writeValueAsString(search);
 
-        mvc.perform(post("/verto-analytic/search").content(contentSearch).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(post("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isEmpty());
