@@ -1,4 +1,4 @@
-package verto.analytic.exercise.string;
+package verto.analytic.exercise.string.upload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class StringControllerUploadIT {
+public class UploadControllerIT {
 
     @Autowired
     private MockMvc mvc;

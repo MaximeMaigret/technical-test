@@ -1,4 +1,4 @@
-package verto.analytic.exercise.string;
+package verto.analytic.exercise.string.search;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class StringControllerSearchIT {
+public class SearchControllerIT {
 
     @Autowired
     private MockMvc mvc;
