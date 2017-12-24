@@ -21,4 +21,8 @@ public class StringRepository {
     public void addSet(Set<String> toUpload) {
         storedStrings.add(toUpload);
     }
+
+    public boolean deleteSet(Set<String> deleteSet) {
+        return false;
+    }
 }

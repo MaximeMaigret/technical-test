@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import verto.analytic.exercise.string.SetNotFoundException;
 import verto.analytic.exercise.string.StringRepository;
 import verto.analytic.exercise.string.search.SearchService;
 
@@ -41,7 +42,7 @@ public class DeleteServiceTest {
 
         Set<String> setString = new HashSet<>(Arrays.asList("aaa", "bbb", "ccc"));
 
-        when(repository.deleteSet()).thenReturn(Boolean.FALSE);
+        when(repository.deleteSet(setString)).thenReturn(Boolean.FALSE);
 
         service.delete(setString);
     }
