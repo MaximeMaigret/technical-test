@@ -23,6 +23,6 @@ public class StringRepository {
     }
 
     public boolean deleteSet(Set<String> deleteSet) {
-        return false;
+        return storedStrings.remove(deleteSet);
     }
 }
