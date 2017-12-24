@@ -35,11 +35,6 @@ public class SearchControllerIT {
     @Autowired
     private MockMvc mvc;
 
-    @After
-    public void clean(){
-
-    }
-
     /*
         Integration tests
      */
