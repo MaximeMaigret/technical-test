@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_CLASS;
 import static org.springframework.test.annotation.DirtiesContext.MethodMode.BEFORE_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,7 +52,7 @@ public class SearchControllerIT {
 
         String search = "bbb";
 
-        mvc.perform(post("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -78,7 +79,7 @@ public class SearchControllerIT {
 
         String search = "bbb";
 
-        mvc.perform(post("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -94,7 +95,7 @@ public class SearchControllerIT {
 
         String search = "bbb";
 
-        mvc.perform(post("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/verto-analytic/search").content(search).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isEmpty());
