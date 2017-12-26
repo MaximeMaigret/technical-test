@@ -15,6 +15,12 @@ public class UploadController {
     @Autowired
     private UploadService service;
 
+    /**
+     * Upload a new set of strings.
+     * As it is a set, each string must be contained only one time
+     *
+     * @param  newStrings  the set of strings to upload
+     */
     @PostMapping("/upload")
     public void uploadString(@RequestBody List<String> newStrings){
         service.upload(newStrings);

@@ -17,6 +17,12 @@ public class DeleteController {
     @Autowired
     private DeleteService service;
 
+    /**
+     * Delete one of the stored set previously uploaded
+     *
+     * @param  deleteString  the exact set previously uploaded
+     */
+
     @PostMapping("/delete")
     public void deleteSet(@RequestBody Set<String> deleteString){
         service.delete(deleteString);
